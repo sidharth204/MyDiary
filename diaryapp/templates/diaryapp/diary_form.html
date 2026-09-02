@@ -1,0 +1,31 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    {% if entry %}
+
+        <h1>Edit Diary Entry</h1>
+
+    {% else %}
+
+        <h1>New Diary Entry</h1>
+
+    {% endif %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Save Entry
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

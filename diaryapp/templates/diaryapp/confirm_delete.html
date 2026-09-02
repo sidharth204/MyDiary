@@ -1,0 +1,36 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Delete Diary Entry</h1>
+
+    <p>
+        Are you sure you want to delete
+        <strong>{{ entry.title }}</strong>?
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button
+            type="submit"
+            class="danger"
+        >
+            Yes, Delete
+        </button>
+
+        <a
+            class="btn"
+            href="{% url 'diary_detail' entry.id %}"
+        >
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

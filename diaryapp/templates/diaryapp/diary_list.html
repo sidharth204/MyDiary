@@ -1,0 +1,51 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block content %}
+
+<h1>My Diary</h1>
+
+<a
+    class="btn"
+    href="{% url 'create_entry' %}"
+>
+    + New Entry
+</a>
+
+<br><br>
+
+{% for entry in entries %}
+
+<div class="card">
+
+    <h2>{{ entry.title }}</h2>
+
+    <p class="date">
+        {{ entry.created_at|date:"d M Y, h:i A" }}
+    </p>
+
+    <p>
+        {{ entry.content|truncatewords:30 }}
+    </p>
+
+    <a
+        class="btn"
+        href="{% url 'diary_detail' entry.id %}"
+    >
+        Read
+    </a>
+
+</div>
+
+{% empty %}
+
+<div class="card">
+
+    <p>
+        You don't have any diary entries yet.
+    </p>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

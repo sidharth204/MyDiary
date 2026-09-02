@@ -1,0 +1,36 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>Welcome to Online Diary</h1>
+
+    <p>
+        Write and manage your personal diary entries
+        securely using Django.
+    </p>
+
+    {% if user.is_authenticated %}
+
+        <a
+            class="btn"
+            href="{% url 'diary_list' %}"
+        >
+            Open My Diary
+        </a>
+
+    {% else %}
+
+        <a
+            class="btn"
+            href="{% url 'register' %}"
+        >
+            Get Started
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
