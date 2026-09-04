@@ -36,6 +36,12 @@ urlpatterns = [
     ),
 
     path(
+        'dashboard/',
+        views.dashboard,
+        name='dashboard'
+    ),
+
+    path(
         'diary/',
         views.diary_list,
         name='diary_list'
@@ -63,5 +69,11 @@ urlpatterns = [
         'diary/<int:entry_id>/delete/',
         views.delete_entry,
         name='delete_entry'
+    ),
+
+    path(
+        'profile/',
+        views.profile,
+        name='profile'
     ),
 ]

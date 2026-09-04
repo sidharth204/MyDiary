@@ -1,0 +1,164 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block title %}
+Dashboard - MyDiary
+{% endblock %}
+
+{% block content %}
+
+<div class="page-title">
+
+    <h1>
+        Good day, {{ user.username }} 👋
+    </h1>
+
+    <p>
+        Here's a quick overview of your diary journey.
+    </p>
+
+</div>
+
+
+<div class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📄
+        </div>
+
+        <div class="stat-number">
+            {{ total_entries }}
+        </div>
+
+        <div class="stat-label">
+            Total Entries
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📌
+        </div>
+
+        <div class="stat-number">
+            {{ pinned_entries }}
+        </div>
+
+        <div class="stat-label">
+            Pinned
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🗂️
+        </div>
+
+        <div class="stat-number">
+            {{ category_count }}
+        </div>
+
+        <div class="stat-label">
+            Categories
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            📅
+        </div>
+
+        <div class="stat-number">
+            {{ current_month_entries }}
+        </div>
+
+        <div class="stat-label">
+            This Month
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+
+        <h2>
+            Recent Entries
+        </h2>
+
+        <a
+            class="btn"
+            href="{% url 'diary_list' %}"
+        >
+            View All
+        </a>
+
+    </div>
+
+    <br>
+
+
+    {% for entry in recent_entries %}
+
+        <div
+            style="
+                padding:15px 0;
+                border-bottom:1px solid #eee;
+            "
+        >
+
+            <a href="{% url 'diary_detail' entry.id %}">
+
+                <strong>
+                    {% if entry.is_pinned %}
+                        📌
+                    {% endif %}
+
+                    {{ entry.title }}
+                </strong>
+
+            </a>
+
+            <p class="entry-date">
+                {{ entry.created_at|date:"d M Y, h:i A" }}
+            </p>
+
+        </div>
+
+    {% empty %}
+
+        <p>
+            No entries yet.
+        </p>
+
+    {% endfor %}
+
+</div>
+
+
+<div class="card quote-card">
+
+    <h2>
+        💭 Today's Thought
+    </h2>
+
+    <p>
+        Take a moment to appreciate how far you've come.
+    </p>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'diaryapp/base.html' %}
+
+{% block title %}
+Profile - MyDiary
+{% endblock %}
+
+
+{% block content %}
+
+<h1>
+    My Profile
+</h1>
+
+<p>
+    Manage your account information.
+</p>
+
+
+<br>
+
+
+<div class="card profile-card">
+
+    <div class="profile-avatar">
+
+        {{ profile_user.username|first|upper }}
+
+    </div>
+
+
+    <div>
+
+        <h2>
+            {{ profile_user.username }}
+        </h2>
+
+        <p>
+            {{ profile_user.email }}
+        </p>
+
+
+        <br>
+
+
+        <div class="badges">
+
+            <span class="badge">
+                📖 {{ entry_count }} Entries
+            </span>
+
+            <span class="badge">
+                📅 Joined
+                {{ profile_user.date_joined|date:"d M Y" }}
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

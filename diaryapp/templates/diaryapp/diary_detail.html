@@ -1,40 +1,92 @@
 {% extends 'diaryapp/base.html' %}
 
+{% block title %}
+{{ entry.title }} - MyDiary
+{% endblock %}
+
 {% block content %}
 
 <div class="card">
 
-    <h1>{{ entry.title }}</h1>
+    <div
+        style="
+            display:flex;
+            justify-content:space-between;
+            gap:20px;
+            align-items:start;
+        "
+    >
 
-    <p class="date">
-        Created:
-        {{ entry.created_at|date:"d M Y, h:i A" }}
-    </p>
+        <div>
 
-    <p>
-        Updated:
-        {{ entry.updated_at|date:"d M Y, h:i A" }}
-    </p>
+            <h1>
 
-    <hr>
+                {% if entry.is_pinned %}
+                    📌
+                {% endif %}
 
-    <p>
+                {{ entry.title }}
+
+            </h1>
+
+
+            <div class="badges">
+
+                <span class="badge">
+                    {{ entry.category }}
+                </span>
+
+                <span class="badge">
+                    {{ entry.get_mood_display }}
+                </span>
+
+            </div>
+
+
+            <p class="entry-date">
+
+                Created:
+                {{ entry.created_at|date:"d M Y, h:i A" }}
+
+                <br>
+
+                Updated:
+                {{ entry.updated_at|date:"d M Y, h:i A" }}
+
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a
+                class="btn"
+                href="{% url 'edit_entry' entry.id %}"
+            >
+                Edit
+            </a>
+
+            <a
+                class="btn btn-danger"
+                href="{% url 'delete_entry' entry.id %}"
+            >
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <hr style="margin:25px 0;">
+
+
+    <div>
+
         {{ entry.content|linebreaks }}
-    </p>
 
-    <a
-        class="btn"
-        href="{% url 'edit_entry' entry.id %}"
-    >
-        Edit
-    </a>
-
-    <a
-        class="btn danger"
-        href="{% url 'delete_entry' entry.id %}"
-    >
-        Delete
-    </a>
+    </div>
 
 </div>
 

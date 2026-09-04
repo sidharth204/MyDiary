@@ -1,51 +1,171 @@
 {% extends 'diaryapp/base.html' %}
 
+{% block title %}
+My Entries - MyDiary
+{% endblock %}
+
 {% block content %}
 
-<h1>My Diary</h1>
-
-<a
-    class="btn"
-    href="{% url 'create_entry' %}"
+<div
+    style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:25px;
+    "
 >
-    + New Entry
-</a>
 
-<br><br>
+    <div>
 
-{% for entry in entries %}
+        <h1>
+            My Diary Entries
+        </h1>
 
-<div class="card">
+        <p>
+            Capture your thoughts, one entry at a time.
+        </p>
 
-    <h2>{{ entry.title }}</h2>
+    </div>
 
-    <p class="date">
-        {{ entry.created_at|date:"d M Y, h:i A" }}
-    </p>
-
-    <p>
-        {{ entry.content|truncatewords:30 }}
-    </p>
 
     <a
         class="btn"
-        href="{% url 'diary_detail' entry.id %}"
+        href="{% url 'create_entry' %}"
     >
-        Read
+        + New Entry
     </a>
 
 </div>
 
-{% empty %}
 
-<div class="card">
+<form
+    method="GET"
+    class="search-area"
+>
 
-    <p>
-        You don't have any diary entries yet.
-    </p>
+    <input
+        type="text"
+        name="q"
+        value="{{ search_query }}"
+        class="form-control"
+        placeholder="Search entries..."
+    >
+
+
+    <select
+        name="category"
+        class="form-control"
+    >
+
+        <option value="">
+            All Categories
+        </option>
+
+        {% for value, label in categories %}
+
+            <option
+                value="{{ value }}"
+                {% if selected_category == value %}
+                    selected
+                {% endif %}
+            >
+                {{ label }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <button
+        type="submit"
+        class="btn"
+    >
+        Search
+    </button>
+
+</form>
+
+
+<div class="entries-grid">
+
+    {% for entry in entries %}
+
+        <div class="entry-card">
+
+            <div class="entry-title">
+
+                {% if entry.is_pinned %}
+                    📌
+                {% endif %}
+
+                {{ entry.title }}
+
+            </div>
+
+
+            <div class="entry-date">
+
+                {{ entry.created_at|date:"d M Y, h:i A" }}
+
+            </div>
+
+
+            <div class="badges">
+
+                <span class="badge">
+                    {{ entry.category }}
+                </span>
+
+                <span class="badge">
+                    {{ entry.get_mood_display }}
+                </span>
+
+            </div>
+
+
+            <p>
+                {{ entry.content|truncatewords:25 }}
+            </p>
+
+
+            <br>
+
+
+            <a
+                class="btn"
+                href="{% url 'diary_detail' entry.id %}"
+            >
+                Read Entry
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <div class="card">
+
+            <h2>
+                No entries found
+            </h2>
+
+            <p>
+                Start writing your first diary entry.
+            </p>
+
+            <br>
+
+            <a
+                class="btn"
+                href="{% url 'create_entry' %}"
+            >
+                Create Entry
+            </a>
+
+        </div>
+
+    {% endfor %}
 
 </div>
-
-{% endfor %}
 
 {% endblock %}

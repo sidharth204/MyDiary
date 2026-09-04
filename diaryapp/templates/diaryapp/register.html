@@ -1,30 +1,72 @@
 {% extends 'diaryapp/base.html' %}
 
+{% block title %}
+Create Account - MyDiary
+{% endblock %}
+
+
 {% block content %}
 
-<div class="card">
+<div class="auth-wrapper">
 
-    <h1>Create Account</h1>
+    <div class="auth-card">
 
-    <form method="POST">
+        <div class="logo">
 
-        {% csrf_token %}
+            <span class="logo-icon">
+                🚀
+            </span>
 
-        {{ form.as_p }}
+            MyDiary
 
-        <button type="submit">
-            Register
-        </button>
+        </div>
 
-    </form>
 
-    <p>
-        Already have an account?
+        <br>
 
-        <a href="{% url 'login' %}">
-            Login
-        </a>
-    </p>
+
+        <h1>
+            Join MyDiary ✨
+        </h1>
+
+        <p>
+            Start writing your story today.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+
+            <button
+                type="submit"
+                class="btn"
+                style="width:100%;"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <br>
+
+
+        <p>
+            Already have an account?
+
+            <a
+                href="{% url 'login' %}"
+                style="color:#5b4bff;"
+            >
+                Login
+            </a>
+        </p>
+
+    </div>
 
 </div>
 
